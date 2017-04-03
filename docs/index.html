@@ -20,12 +20,28 @@
       <a-assets>
           <img id="sky1" src="">
        </a-assets>
-      
+	   
+
       
       <a-scene>
+	  
+	   <a-camera position ="0 0 1"> 
+        <!-- カーソル --> 
+        <a-entity cursor="fuse: true; fuseTimeout: 4000"> 
+          <!-- リング --> 
+          <a-ring 
+            color="#e74c3c" 
+            radius-inner="0.01" 
+           radius-outer="0.015" 
+            position="0 0 -0.75">    
+            </a-ring> 
+        </a-entity> 
+      </a-camera> 
+	  
           <a-sky color="#DDDDDD" ></a-sky>
           
-          <a-box position="0 1 -2" color="#C00"></a-box>
+          <a-box id="box1" position="0 1 -2" color="#C00"></a-box>
+	      <a-box id="box2" position="2 1 -2" color="#C00"></a-box>
           <a-text value="text"></a-text>
           
           
@@ -37,10 +53,30 @@
     var scene = document.querySelector('a-scene');
     var text= document.createElement('a-text');
      var text1= document.createElement('a-text');
+	 var text2 = document.createElement('a-text');
+	 
+	var box2= document.getElementById('box2')
     
-    var lat1
+    var lat1;
     var lng1;
+	
+	var lolat = 36.2149;
+	var lolng = 137.8449;
+	
+	
+	var lolat1 = 36.2150;
+	var lolng1 =  137.8450;
+	
+	function box(){
+	var box =  document.getElementById('box1');
 
+	box.setAttribute('color','#1E90FF');
+
+	}
+	
+
+
+setTimeout("box()",5000);
 
 navigator.geolocation.watchPosition(
     function(position){
@@ -61,10 +97,20 @@ navigator.geolocation.watchPosition(
         text1.setAttribute('position', '0 2 -2');
         text1.setAttribute('value',lng1);
         
+		
+	    text2.setAttribute('color', '#FF9500');
+        text2.setAttribute('position', '0 3 -2');
+        text2.setAttribute('value',lat);
         
         scene.appendChild(text);
-        scene.appendChild(text1);
+		scene.appendChild(text1);
+		//scene.appendChild(text2);
         
+		if(lat1 == lolat && lng1== lolng){
+		  box2.setAttribute('color','#87CEFA');
+		}
+		
+		
        // document.getElementById("myPos").innerHTML = "緯度:"+lat1+"<br>経度:"+lng1;
         },
     function(error){
@@ -76,9 +122,15 @@ navigator.geolocation.watchPosition(
         
     }
 );
-    
+    var clickElement = document.getElementById("box1");
+  clickElement.addEventListener("click", function() {
+   // location.href = "https://www.yahoo.co.jp";
+  },false);
     
 
+		 
+		
+		
     </script>
 
 <script type="text/javascript" src="index.js"></script>
